@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portfolio | Abdul Majid Rendy Ramdani</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Swiper Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: {
+                        brand: '#a3e635', /* Lime Green */
+                        dark: '#000000',
+                        card: '#0a0a0a'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #000; color: #fff; overflow-x: hidden; width: 100%; }
+
+        /* --- ATMOSPHERIC --- */
+        #lightning-flash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; opacity: 0; pointer-events: none; z-index: 100;
+        }
+        @keyframes flashEffect { 0% { opacity: 0; } 10% { opacity: 0.4; } 15% { opacity: 0; } 25% { opacity: 0.5; } 100% { opacity: 0; } }
+        .do-flash { animation: flashEffect 0.5s ease-out; }
+
+        .rain-drop {
+            position: fixed; width: 1px; height: 40px;
+            background: linear-gradient(transparent, #a3e635); opacity: 0.15;
+            pointer-events: none; z-index: 1;
+        }
+
+        /* --- TYPEWRITER --- */
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+            color: #a3e635;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* --- SHINE CARD EFFECT --- */
+        .shine-card {
+            position: relative; z-index: 1; overflow: hidden;
+            background: #0a0a0a; border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 1.5rem;
+        }
+        .shine-card::before {
+            content: ''; position: absolute;
+            top: -150%; left: -150%; width: 50%; height: 400%;
+            background: linear-gradient(to right, transparent, rgba(163, 230, 53, 0.05), transparent);
+            transform: rotate(45deg);
+            animation: shine-sweep 6s ease-in-out infinite;
+        }
+        @keyframes shine-sweep { 0% { left: -150%; } 100% { left: 250%; } }
+
+        /* --- SOCCER GAME --- */
+        #ball-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 40;
+        }
+        .soccer-ball {
+            position: absolute; width: 55px; height: 55px; font-size: 45px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: grab; pointer-events: auto; user-select: none;
+            filter: drop-shadow(0 0 15px rgba(163, 230, 53, 0.3));
+            touch-action: none;
+        }
+        .goal-post {
+            position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+            width: 180px; height: 80px;
+            border: 3px solid #a3e635; border-top: none;
+            background: rgba(163, 230, 53, 0.1);
+            border-radius: 0 0 15px 15px;
+            z-index: 30; pointer-events: none;
+            box-shadow: 0 0 20px rgba(163, 230, 53, 0.2);
+        }
+        .score-board {
+            position: absolute; top: 15px; right: 25px;
+            background: #0a0a0a; border: 1px solid #a3e635;
+            padding: 8px 16px; border-radius: 10px; font-weight: bold;
+            color: #a3e635; z-index: 50;
+        }
+
+        /* Swiper pagination below images */
+        .swiper { padding-bottom: 50px !important; }
+        .swiper-pagination { bottom: 0 !important; }
+        .swiper-pagination-bullet { background: #555; opacity: 1; }
+        .swiper-pagination-bullet-active { background: #a3e635 !important; width: 20px; border-radius: 10px; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <div id="lightning-flash"></div>
+    <!-- Sound Effect for Goal -->
+    <audio id="goal-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3" preload="auto"></audio>
+
+    <!-- HEADER -->
+    <header class="w-full border-b border-white/5 bg-black/90 backdrop-blur-md sticky top-0 z-50">
+        <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter">Rendy<span class="text-brand">.</span></a>
+            <ul class="hidden md:flex space-x-8 font-medium text-sm">
+                <li><a href="#" class="hover:text-brand transition-colors">Home</a></li>
+                <li><a href="#services" class="hover:text-brand transition-colors">Services</a></li>
+                <li><a href="#portfolio" class="hover:text-brand transition-colors">Portfolio</a></li>
+            </ul>
+            <a href="https://wa.me/6285141220521" target="_blank" class="bg-brand text-black px-6 py-2 rounded-full font-bold hover:scale-105 transition-all text-sm shadow-[0_0_15px_rgba(163,230,53,0.4)]">Let's Talk</a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="max-w-6xl mx-auto px-6 py-20 flex flex-col-reverse md:flex-row items-center justify-between gap-12 relative min-h-[850px]">
+        
+        <!-- Score & Goal -->
+        <div class="score-board text-center">
+            <p class="text-[9px] uppercase opacity-60 tracking-widest">Goals</p>
+            <span id="score-val" class="text-2xl">0</span>
+        </div>
+        <div class="goal-post"></div>
+        <div id="ball-container"></div>
+
+        <div class="md:w-1/2 space-y-6 z-10 md:mt-20" data-aos="fade-right">
+            <div class="inline-block px-4 py-2 bg-brand/10 rounded-full border border-brand/20 text-xs font-semibold text-brand">
+                <i class="fa-solid fa-bolt mr-2"></i> Trusted Specialist
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                I'm <span class="text-brand">Rendy</span><br>
+                <span id="typewriter" class="text-2xl md:text-4xl text-gray-400 typewriter-cursor"></span>
+            </h1>
+            <p class="text-gray-500 text-lg leading-relaxed max-w-md">I handle daily operations, build scalable CRM systems, and execute clear content strategies for global brands.</p>
+            <div class="flex items-center space-x-5 pt-4">
+                <a href="https://www.instagram.com/rendy_ramdani87" target="_blank" class="w-12 h-12 flex items-center justify-center bg-card border border-white/10 rounded-full hover:border-brand transition-all text-xl"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/abdul-majid-rendy-ramdani-905624406" target="_blank" class="w-12 h-12 flex items-center justify-center bg-card border border-white/10 rounded-full hover:border-brand transition-all text-xl"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        
+        <!-- Adjusted Profile Photo (Lower Position to avoid Goal) -->
+        <div class="md:w-1/2 relative flex justify-center items-center z-10 mt-28 md:mt-40" data-aos="zoom-in">
+            <!-- Box Container: Rotate tilted for aesthetics -->
+            <div class="w-64 h-64 md:w-80 md:h-80 bg-brand rounded-2xl border-4 border-black shadow-2xl relative z-10 overflow-hidden flex justify-center rotate-[-4deg]">
+                <img src="https://i.postimg.cc/qMrv8htv/IMG-20260329-002019.png" class="absolute bottom-0 w-[90%] h-auto object-contain">
+            </div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-brand/20 rounded-full blur-[100px] -z-10"></div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="max-w-6xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="shine-card p-8 text-center" data-aos="fade-up">
+            <div class="text-brand text-3xl font-bold">+193%</div>
+            <p class="text-gray-500 text-xs mt-1">Performance</p>
+        </div>
+        <div class="shine-card p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-brand text-3xl font-bold">7.60</div>
+            <p class="text-gray-500 text-xs mt-1">ROAS</p>
+        </div>
+        <div class="shine-card p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="text-brand text-3xl font-bold">9.31%</div>
+            <p class="text-gray-500 text-xs mt-1">Message ROAS</p>
+        </div>
+        <div class="shine-card p-8 text-center" data-aos="fade-up" data-aos-delay="300">
+            <div class="text-brand text-3xl font-bold">50%</div>
+            <p class="text-gray-500 text-xs mt-1">Time Saved</p>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="bg-card py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold">How I Can Help You</h2>
+                <div class="w-20 h-1 bg-brand mx-auto mt-4"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="shine-card p-10" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-black text-brand rounded-2xl flex items-center justify-center text-3xl mb-8 border border-white/10"><i class="fa-solid fa-calendar-check"></i></div>
+                    <h3 class="text-xl font-bold mb-4">Social Strategy</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Automated workflows that save 50% of your time while maintaining a consistent and engaging brand presence.</p>
+                </div>
+                <div class="shine-card p-10" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-brand text-black rounded-2xl flex items-center justify-center text-3xl mb-8"><i class="fa-solid fa-bullseye"></i></div>
+                    <h3 class="text-xl font-bold mb-4">Paid Ads Specialist</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Expert management of Meta & Google Ads focusing on high ROAS, creative testing, and audience scaling.</p>
+                </div>
+                <div class="shine-card p-10" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-black text-brand rounded-2xl flex items-center justify-center text-3xl mb-8 border border-white/10"><i class="fa-solid fa-users-gear"></i></div>
+                    <h3 class="text-xl font-bold mb-4">CRM & Growth</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm">Building scalable CRM systems to streamline lead management and maximizing customer lifetime value.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section id="portfolio" class="max-w-6xl mx-auto px-6 py-24">
+        <h2 class="text-4xl font-bold mb-14" data-aos="fade-up">Client Case Studies</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="shine-card p-8" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-6"><span class="px-4 py-1.5 bg-black text-brand text-xs font-bold rounded-full">Education</span><i class="fa-solid fa-graduation-cap text-brand text-2xl"></i></div>
+                <h3 class="text-2xl font-bold mb-4">Euro Education UK</h3>
+                <p class="text-gray-500 text-sm mb-8 leading-relaxed">Scaled brand reach through targeted follower growth strategies and automated lead nurturing flows.</p>
+                <div class="flex gap-4">
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">Reach</p><p class="text-xl font-bold">204K+</p></div>
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">ROAS</p><p class="text-xl font-bold text-brand">9.31%</p></div>
+                </div>
+            </div>
+            <div class="shine-card p-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex justify-between items-start mb-6"><span class="px-4 py-1.5 bg-black text-brand text-xs font-bold rounded-full">SaaS</span><i class="fa-solid fa-bolt text-brand text-2xl"></i></div>
+                <h3 class="text-2xl font-bold mb-4">The Running Channel</h3>
+                <p class="text-gray-500 text-sm mb-8 leading-relaxed">Data-driven paid media strategy that delivered exceptional subscriber acquisition and a 7.60 ROAS.</p>
+                <div class="flex gap-4">
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">ROAS</p><p class="text-xl font-bold text-brand">7.60</p></div>
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">Subs</p><p class="text-xl font-bold">359</p></div>
+                </div>
+            </div>
+            <div class="shine-card p-8" data-aos="fade-up">
+                <div class="flex justify-between items-start mb-6"><span class="px-4 py-1.5 bg-black text-brand text-xs font-bold rounded-full">E-Commerce</span><i class="fa-solid fa-shop text-brand text-2xl"></i></div>
+                <h3 class="text-2xl font-bold mb-4">SKINS Compression</h3>
+                <p class="text-gray-500 text-sm mb-8 leading-relaxed">Refined creative assets and optimized ad delivery to boost store performance and average order value.</p>
+                <div class="flex gap-4">
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">Perf.</p><p class="text-xl font-bold text-brand">+193%</p></div>
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">AOV</p><p class="text-xl font-bold text-brand">+17%</p></div>
+                </div>
+            </div>
+            <div class="shine-card p-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex justify-between items-start mb-6"><span class="px-4 py-1.5 bg-black text-brand text-xs font-bold rounded-full">Management</span><i class="fa-solid fa-clock text-brand text-2xl"></i></div>
+                <h3 class="text-2xl font-bold mb-4">Auto-Scheduling</h3>
+                <p class="text-gray-500 text-sm mb-8 leading-relaxed">Complex automation for booking systems, reducing manual input and error rates significantly.</p>
+                <div class="flex gap-4">
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">Time</p><p class="text-xl font-bold text-brand">50%</p></div>
+                    <div class="bg-black p-4 rounded-xl flex-1 text-center border border-white/5"><p class="text-xs text-gray-600 font-bold uppercase">Sync</p><p class="text-xl font-bold text-brand">98%</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNER WA -->
+    <section class="max-w-6xl mx-auto px-6 pb-24" data-aos="fade-up">
+        <div class="shine-card bg-brand p-12 flex flex-col md:flex-row items-center justify-between shadow-2xl">
+            <div class="mb-8 md:mb-0">
+                <h2 class="text-4xl font-bold text-black mb-2 leading-tight">Ready to scale?</h2>
+                <p class="text-black/60 font-semibold">Let's build your brand ecosystem today.</p>
+            </div>
+            <a href="https://wa.me/6285141220521" target="_blank" class="px-10 py-5 bg-black text-brand font-bold rounded-full hover:scale-105 transition-all text-lg shadow-xl">Contact Me Now</a>
+        </div>
+    </section>
+
+    <!-- EXPERTISE SHOWCASE (With Pagination below and Airy transition) -->
+    <section class="max-w-6xl mx-auto px-6 pb-24 text-center" data-aos="fade-up">
+        <h2 class="text-3xl font-bold mb-12">Expertise Showcase</h2>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="https://i.postimg.cc/ncP7pzyL/1-20260428-195614-0000.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/J42JMnf8/2-20260428-195614-0001.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/Vk5jyM5y/3-20260428-195614-0002.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/yYb9sdMk/4-20260428-195614-0003.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/xT4HnCWw/5-20260428-195614-0004.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/RZJtFmmN/6-20260428-195614-0005.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/FHkSRvvS/7-20260428-195615-0006.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/7ZJz6442/8-20260428-195615-0007.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/W1qZ3VVq/9-20260428-195615-0008.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/5tcCQrN1/10-20260428-195615-0009.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/fbx0cvJh/11-20260428-195615-0010.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/43zh61mf/12-20260428-195615-0011.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/d08T29L9/13-20260428-195615-0012.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/26rL2BZn/14-20260428-195615-0013.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/G2dTqsyQ/15-20260428-195615-0014.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/9MCwJq7L/16-20260428-195615-0015.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/gjBwzSB4/17-20260428-195615-0016.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/GtSBL750/18-20260428-195615-0017.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/CMvns5LJ/19-20260428-195615-0018.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/GhH87RHM/20-20260428-195616-0019.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/02bMWvzr/21-20260428-195616-0020.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/VLpS2ht6/22-20260428-195618-0021.png" class="rounded-3xl shadow-2xl"></div>
+                <div class="swiper-slide"><img src="https://i.postimg.cc/g2hwpKys/23-20260428-195618-0022.png" class="rounded-3xl shadow-2xl"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-10 text-center">
+        <p class="text-xl font-bold">Rendy<span class="text-brand">.</span></p>
+        <p class="text-gray-500 text-[10px] mt-2">&copy; 2026 Abdul Majid Rendy Ramdani.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        AOS.init({ once: true, duration: 800, offset: 50 });
+
+        // Typewriter
+        const words = ["Social Media Specialist.", "Virtual Assistant.", "Paid Ads Expert.", "CRM Strategist."];
+        let wI = 0, cI = 0, isD = false;
+        function type() {
+            const cur = words[wI];
+            if(isD) cI--; else cI++;
+            document.getElementById('typewriter').textContent = cur.substring(0, cI);
+            let sp = isD ? 50 : 150;
+            if(!isD && cI === cur.length) { sp = 2000; isD = true; }
+            else if(isD && cI === 0) { isD = false; wI = (wI + 1) % words.length; sp = 500; }
+            setTimeout(type, sp);
+        }
+        type();
+
+        // Atmospheric Rain
+        function createRain() {
+            for (let i = 0; i < 30; i++) {
+                const d = document.createElement('div');
+                d.className = 'rain-drop';
+                d.style.left = Math.random() * 100 + 'vw';
+                d.style.top = Math.random() * -100 + 'vh';
+                d.style.animation = `rainFall ${Math.random() * 0.4 + 0.8}s linear infinite`;
+                document.body.appendChild(d);
+            }
+        }
+        const rStyle = document.createElement('style');
+        rStyle.innerHTML = `@keyframes rainFall { 0% { transform: translateY(-50px); } 100% { transform: translateY(110vh); } }`;
+        document.head.appendChild(rStyle);
+        createRain();
+
+        function triggerLightning() {
+            const f = document.getElementById('lightning-flash');
+            setTimeout(() => {
+                f.classList.add('do-flash');
+                setTimeout(() => f.classList.remove('do-flash'), 500);
+                triggerLightning();
+            }, Math.random() * 10000 + 4000);
+        }
+        triggerLightning();
+
+        // Soccer Game Logic
+        const bCont = document.getElementById('ball-container');
+        const sVal = document.getElementById('score-val');
+        const gSound = document.getElementById('goal-sound');
+        const hero = document.getElementById('hero');
+        let score = 0;
+        const balls = [];
+
+        function addBall() {
+            const el = document.createElement('div');
+            el.className = 'soccer-ball'; el.innerHTML = '⚽';
+            bCont.appendChild(el);
+            const d = { el, x: window.innerWidth / 2 - 25, y: 550, vx: 0, vy: 0, size: 55, isDragging: false };
+            const start = (e) => { d.isDragging = true; const cX = e.clientX || e.touches[0].clientX; const cY = e.clientY || e.touches[0].clientY; d.oX = cX - d.x; d.oY = cY - d.y; };
+            const move = (e) => { if (!d.isDragging) return; const cX = e.clientX || e.touches[0].clientX; const cY = e.clientY || e.touches[0].clientY; d.vx = (cX - d.oX - d.x) * 0.4; d.vy = (cY - d.oY - d.y) * 0.4; d.x = cX - d.oX; d.y = cY - d.oY; };
+            const end = () => d.isDragging = false;
+            el.addEventListener('mousedown', start); window.addEventListener('mousemove', move); window.addEventListener('mouseup', end);
+            el.addEventListener('touchstart', start); window.addEventListener('touchmove', move); window.addEventListener('touchend', end);
+            balls.push(d);
+        }
+
+        function phys() {
+            const hH = hero.offsetHeight;
+            const gX = window.innerWidth / 2;
+            balls.forEach(b => {
+                if (!b.isDragging) {
+                    b.vy += 0.4; b.x += b.vx; b.y += b.vy;
+                    if (b.x <= 0 || b.x >= window.innerWidth - b.size) b.vx *= -0.7;
+                    if (b.y >= hH - b.size) { b.y = hH - b.size; b.vy *= -0.5; b.vx *= 0.9; }
+                    if (b.y <= 0) { b.y = 0; b.vy *= -0.7; }
+                    // Goal detect
+                    if (b.y < 95 && b.x > gX - 90 && b.x < gX + 90) {
+                        score++; sVal.textContent = score;
+                        // Play Sound
+                        gSound.currentTime = 0;
+                        gSound.play();
+                        // Reset Ball
+                        b.y = hH - 120; b.x = Math.random() * (window.innerWidth - 100) + 50;
+                        b.vx = 0; b.vy = 0;
+                    }
+                }
+                b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, 0) rotate(${b.x * 2}deg)`;
+            });
+            requestAnimationFrame(phys);
+        }
+        addBall(); phys();
+
+        // Swiper with Pagination Below and airy transition
+        new Swiper('.mySwiper', {
+            loop: true, 
+            slidesPerView: 1, 
+            spaceBetween: 30, 
+            autoplay: { delay: 3500 },
+            effect: 'creative',
+            creativeEffect: {
+                prev: { shadow: false, translate: ["-120%", 0, -500], opacity: 0 },
+                next: { shadow: false, translate: ["120%", 0, -500], opacity: 0 },
+            },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            breakpoints: { 768: { slidesPerView: 1.5 } }
+        });
+    </script>
+</body>
+</html>
