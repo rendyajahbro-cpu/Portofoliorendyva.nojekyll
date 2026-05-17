@@ -78,6 +78,12 @@
         .goal-post { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 180px; height: 80px; border: 3px solid #2dd4bf; border-top: none; background: rgba(45, 212, 191, 0.1); border-radius: 0 0 15px 15px; z-index: 10; pointer-events: none; }
         .score-board { position: absolute; top: 15px; right: 20px; border: 1px solid #2dd4bf; padding: 6px 15px; border-radius: 10px; color: #2dd4bf; background: rgba(2, 6, 23, 0.9); font-weight: bold; z-index: 50; }
 
+        /* --- PROBLEM SOLVER SECTION (LARGE) --- */
+        .tour-section { padding: 80px 0; background: transparent; position: relative; z-index: 10; }
+        .tour-swiper { width: 100%; height: auto; min-height: 500px; }
+        .tour-slide { display: flex; align-items: center; justify-content: center; background: transparent !important; }
+        .tour-slide img { max-width: 90%; max-height: 85vh; object-fit: contain; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+
         /* --- ROBOT (RED ORIGINAL) --- */
         .robot-section { position: relative; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
         .robot-scene { position: relative; transform-style: preserve-3d; z-index: 10; cursor: pointer; transform: scale(0.5); } 
@@ -103,6 +109,9 @@
         .marquee-title-content { display: inline-block; animation: scrollTitle 30s linear infinite; }
         @keyframes scrollTitle { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .marquee-txt { font-size: 1.3rem; font-weight: 800; color: #2dd4bf; opacity: 0.3; text-transform: uppercase; margin-right: 50px; }
+
+        /* --- SEAMLESS FOOTER BLUR --- */
+        .nova-footer { background: rgba(2, 6, 23, 0.1) !important; backdrop-filter: blur(25px) !important; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body class="dark theme-video font-sans antialiased text-white bg-[#020617]">
@@ -194,6 +203,18 @@
         </div>
     </section>
 
+    <!-- PROBLEM SOLVER (15 PHOTOS ADDED) -->
+    <section class="tour-section" data-aos="ae-reveal">
+        <div class="max-w-6xl mx-auto px-6 mb-12 text-center">
+            <h2 class="text-3xl font-black uppercase tracking-[0.25em] text-brand" data-i18n="solver-title">Problem Solver</h2>
+            <div class="w-20 h-1 bg-brand mx-auto mt-4"></div>
+        </div>
+        <div class="swiper tourSwiper tour-swiper">
+            <div class="swiper-wrapper" id="tour-wrapper"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
     <!-- CONTACT -->
     <section id="contact" class="py-24 max-w-6xl mx-auto px-6 relative z-10" data-aos="ae-reveal">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -216,8 +237,8 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="nova-footer relative z-20 py-20 px-6 bg-black/40 backdrop-blur-3xl border-t border-white/5">
+    <!-- FOOTER (BLURRED & SEAMLESS) -->
+    <footer class="nova-footer relative z-20 py-20 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="robot-section mb-16">
                 <div class="robot-scene mx-auto" onclick="robotClick()">
@@ -246,38 +267,39 @@
     <script>
         AOS.init({ once: false, mirror: true, duration: 1200 });
 
+        // FOTO PROBLEM SOLVER DATA
+        const tourImgs = {
+            en: ['https://i.postimg.cc/MT9y9Q0x/8s-E4vsz46SJ9n-YWepx-ZO4Y.jpg','https://i.postimg.cc/wTyhk37D/a-Ls-XLKIu3ryd-FP-WIT2Odf.jpg','https://i.postimg.cc/qMh8GgNf/8Qmd-YGTNgvwbg-Fne-Sv4OM4.jpg','https://i.postimg.cc/PrpmMNPF/a-SOs9d-D9c-48YQSMc-Os-9.jpg','https://i.postimg.cc/BvsHsgNT/a-F7DPe-D9Ei-Hb-KPm-X1QE-xh.jpg','https://i.postimg.cc/gkz0Y7PJ/a-PRMi-HPi8ljfh-ZJtsve-lw.jpg','https://i.postimg.cc/HW4x1gFJ/b-OKH0a0t-BUr1ATp-Yk-AN4zs.jpg','https://i.postimg.cc/9MBjKWzj/bp-Inhrz-TKPUe-IBo-JYZ-Qf.jpg','https://i.postimg.cc/DZcKH2mT/9phx-Mj-Gaj1a2Is-WXGKCk-TV.jpg','https://i.postimg.cc/X7P6T1jz/99Md-G-SMIa07x-HXs66d-O4K.jpg','https://i.postimg.cc/HkW39TDq/9D9Qf-KNVCb-R6YUOG2e54kj.jpg','https://i.postimg.cc/cL1TBdGq/86j-Gy5Ov-VY-3at-JEcf-PODO.jpg','https://i.postimg.cc/ht4M1KRR/9JAFa2-yu-UU2KP9d2zl-OQy.jpg','https://i.postimg.cc/SxQVfmFw/a0v-GIieek-D-26s-RD3AX4DY.jpg','https://i.postimg.cc/kGfRJ310/ayq-BREZ-IEU7z-FQkt-LDk5c.jpg'],
+            id: ['https://i.postimg.cc/9FHcMn5Z/IMG-20260514-WA0042.jpg','https://i.postimg.cc/65xB3mJ0/IMG-20260514-WA0045.jpg','https://i.postimg.cc/8PgT50QY/IMG-20260514-WA0046.jpg','https://i.postimg.cc/CLCSfswg/IMG-20260514-WA0047.jpg','https://i.postimg.cc/QdXsgKMs/IMG-20260514-WA0044.jpg','https://i.postimg.cc/P5thbvqP/IMG-20260515-WA0048.jpg','https://i.postimg.cc/kgn9NR5Q/IMG-20260515-WA0050.jpg','https://i.postimg.cc/VkY190NF/IMG-20260515-WA0051.jpg','https://i.postimg.cc/VNv8pyny/IMG-20260515-WA0052.jpg','https://i.postimg.cc/bv5hj690/IMG-20260515-WA0053.jpg','https://i.postimg.cc/1zdQZWrH/IMG-20260516-WA0003.jpg','https://i.postimg.cc/XJy0Nwss/IMG-20260516-WA0004.jpg','https://i.postimg.cc/cH8N1QFV/IMG-20260516-WA0005.jpg','https://i.postimg.cc/W3JPpM9v/IMG-20260516-WA0006.jpg','https://i.postimg.cc/SszpQWZm/IMG-20260516-WA0007.jpg']
+        };
+
+        let activeTourSwiper = null;
+        function renderTour(lang) {
+            const wrapper = document.getElementById('tour-wrapper');
+            if (activeTourSwiper) { activeTourSwiper.destroy(true, true); }
+            wrapper.innerHTML = '';
+            const set = tourImgs[lang] || tourImgs.en;
+            set.forEach(img => {
+                wrapper.innerHTML += `<div class="swiper-slide tour-slide"><img src="${img}" alt="Solver"></div>`;
+            });
+            activeTourSwiper = new Swiper('.tourSwiper', { effect: 'fade', fadeEffect: { crossFade: true }, loop: true, autoplay: { delay: 4000 }, pagination: { el: '.swiper-pagination', clickable: true } });
+        }
+
         // SILENT DOWNLOAD LOGIC
         function silentDownload() {
-            const downloadUrl = 'https://drive.google.com/uc?export=download&id=1DqEcZK_Dl5Od31v9lKJE6DAgLw0a17T9';
-            const a = document.createElement('a');
-            a.href = downloadUrl;
-            a.download = 'CV-Rendy-Ramdani.jpg';
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => {
-                document.body.removeChild(a);
-            }, 100);
-            // Visual feedback
+            window.open('https://drive.google.com/uc?export=download&id=1DqEcZK_Dl5Od31v9lKJE6DAgLw0a17T9');
             const bubble = document.getElementById('chatBubble');
             bubble.textContent = "DOWNLOADING...";
             bubble.style.display = 'block';
             setTimeout(() => bubble.style.display = 'none', 3000);
         }
 
-        // EMAIL AUTOMATIC LOGIC (NO THIRD PARTY)
+        // EMAIL AUTOMATIC LOGIC
         function handleEmailSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('senderName').value;
             const message = document.getElementById('senderMessage').value;
-            const emailTo = "rendyajahh245@gmail.com";
-            const subject = encodeURIComponent(`Inquiry from Portfolio: ${name}`);
-            const body = encodeURIComponent(`Name: ${name}\n\nMessage:\n${message}`);
-            
-            // Menggunakan mailto agar langsung masuk ke inbox email tujuan tanpa pihak ketiga
-            window.location.href = `mailto:${emailTo}?subject=${subject}&body=${body}`;
-            
-            // Success Effect
+            window.location.href = `mailto:rendyajahh245@gmail.com?subject=Inquiry&body=Name: ${name}%0D%0A%0D%0AMessage: ${message}`;
             createShards(window.innerWidth/2, window.innerHeight/2);
             document.getElementById('contactForm').reset();
         }
@@ -318,7 +340,7 @@
 
         // ROBOT & ATMOSPHERIC
         let mX=0, mY=0, cmX=0, cmY=0; document.addEventListener('mousemove',(e)=>{mX=(e.clientX/window.innerWidth)-0.5; mY=(e.clientY/window.innerHeight)-0.5;});
-        function animateRobot(){ cmX+=(mX-cmX)*0.1; cmY+=(mY-cmY)*0.1; const hov=Math.sin(Date.now()*0.002)*10; document.getElementById('robotBody').style.transform=`translateY(${hov}px) rotateY(${cmX*25}deg)`; document.getElementById('robotHead').style.transform=`rotateY(${cmX*60}deg) rotateX(${-cmY*30}deg)`; requestAnimationFrame(animateRobot); }
+        function animateRobot(){ cmX+=(mX-cmX)*0.1; cmY+=(mY-cmY)*0.1; const hov=Math.sin(Date.now()*0.002)*10; if(document.getElementById('robotBody')){document.getElementById('robotBody').style.transform=`translateY(${hov}px) rotateY(${cmX*25}deg)`; document.getElementById('robotHead').style.transform=`rotateY(${cmX*60}deg) rotateX(${-cmY*30}deg)`;} requestAnimationFrame(animateRobot); }
         function robotClick(){ const b=document.getElementById('chatBubble'); b.textContent = "SYSTEM UPDATED!"; b.style.display='block'; setTimeout(()=>b.style.display='none', 2000); }
         animateRobot();
 
@@ -329,58 +351,41 @@
         triggerLightning();
 
         // LOADER
-        let prg=0; const iv=setInterval(() => { prg+=Math.floor(Math.random()*8)+2; if(prg>=100){ prg=100; clearInterval(iv); createShards(window.innerWidth/2, window.innerHeight/2); setTimeout(()=>{ document.getElementById('loader').style.opacity='0'; setTimeout(()=>{document.getElementById('loader').remove(); addBall(); phys();}, 500);}, 500); } document.getElementById('loader-count').textContent=prg+'%';}, 50);
+        let prg=0; const iv=setInterval(() => { prg+=5; if(prg>=100){ prg=100; clearInterval(iv); createShards(window.innerWidth/2, window.innerHeight/2); setTimeout(()=>{ document.getElementById('loader').style.opacity='0'; setTimeout(()=>{document.getElementById('loader').remove(); addBall(); phys();}, 500);}, 500); } document.getElementById('loader-count').textContent=prg+'%';}, 50);
 
         // KAMUS 6 BAHASA FULL
         const dictionary = {
-            en: {"load-text":"LOADING","nav-btn":"WhatsApp","goals":"Goals","hero-tag":"Trusted Specialist","hero-greet":"I'm","hero-desc-full":"I handle daily operations, build scalable CRM systems, and execute clear content strategies for global brands.","dl-cv":"Download CV","stat-perf":"Performance","stat-roas":"ROAS Achieved","stat-msg":"Message ROAS","stat-time":"Time Saved","stat-range":"to","serv-title":"Expertise Showcase","contact-h":"Direct Inquiry","contact-p":"Ready to scale? Let's build today.","comp-1-h":"Social Strategy","comp-1-d":"High-impact social ecosystem.","comp-2-h":"Paid Ads","comp-2-d":"Targeting ROAS Meta/Google.","comp-3-h":"CRM System","comp-3-d":"Scalable lead management.","comp-4-h":"Content Execution","comp-4-d":"Ide creative into conversion.","form-btn":"Submit Proposal","sys-upd":"SYSTEM UPDATED!","f-desc":"Empowering brands through automated workflows, high-performance ads, and integrated content strategy management.","f-q":"Quick Links","link-home":"Home","link-port":"Portfolio","link-cont":"Contact","link-soc":"Social","link-leg":"Legal","link-off":"Office","footer-text":"© 2026 Abdul Majid Rendy Ramdani | All Rights Reserved.","ph-name":"Full Name","ph-msg":"Your Message"},
-            id: {"load-text":"LOADING","nav-btn":"WhatsApp","goals":"Gol","hero-tag":"Spesialis Terpercaya","hero-greet":"Saya","hero-desc-full":"Saya menangani operasional harian, membangun sistem CRM yang skalabel, dan mengeksekusi strategi konten untuk brand global.","dl-cv":"Unduh CV","stat-perf":"Performa","stat-roas":"ROAS Tercapai","stat-msg":"ROAS Pesan","stat-time":"Waktu Hemat","stat-range":"sampai","serv-title":"Galeri Keahlian","contact-h":"Inquiry Langsung","contact-p":"Siap berkembang? Hubungi kami.","comp-1-h":"Strategi Sosial","comp-1-d":"Ekosistem sosial berdampak.","comp-2-h":"Iklan Berbayar","comp-2-d":"Target ROAS Meta/Google.","comp-3-h":"Sistem CRM","comp-3-d":"Manajemen lead skalabel.","comp-4-h":"Eksekusi Konten","comp-4-d":"Kreatif fokus konversi.","form-btn":"Kirim Proposal","sys-upd":"SISTEM DIPERBARUI!","f-desc":"Memberdayakan brand melalui alur kerja otomatis, iklan performa tinggi, dan manajemen strategi konten yang terintegrasi.","f-q":"Tautan Cepat","link-home":"Beranda","link-port":"Portofolio","link-cont":"Kontak","link-soc":"Sosial","link-leg":"Hukum","link-off":"Kantor","footer-text":"© 2026 Rendy Ramdani | Hak Cipta Dilindungi.","ph-name":"Nama Lengkap","ph-msg":"Pesan Anda"},
-            pk: {"load-text":"لوڈنگ","nav-btn":"واٹس ایپ","goals":"اہداف","hero-tag":"قابل اعتماد ماہر","hero-greet":"میں ہوں","hero-desc-full":"میں روزانہ کی کارروائیوں کو سنبھالتا ہوں، اسکیل ایبل CRM سسٹم بناتا ہوں، اور عالمی برانڈز کے لیے مواد کی حکمت عملیوں پر عمل درآمد کرتا ہوں۔","stat-perf":"کارکردگی","stat-roas":"منافع","stat-msg":"پیغام","stat-time":"بچت","stat-range":"تک","serv-title":"مہارت","contact-h":"رابطہ کریں","contact-p":"تیار ہیں؟","comp-1-h":"حکmet عملی","comp-2-h":"اشتہارات","comp-3-h":"CRM سسٹم","comp-4-h":"مواد","form-btn":"ارسال کریں","sys-upd":"سسٹم اپ ڈیٹ ہو گیا!","f-desc":"آٹومیشن کے ذریعے برانڈز کو بااختیار بنانا۔","f-q":"فوری روابط","link-home":"ہوم","link-port":"پورٹ فولیو","link-cont":"رابطہ","link-soc":"سوشل","link-leg":"قانونی","link-off":"دفتر"},
-            jp: {"load-text":"読み込み中","nav-btn":"WhatsApp","goals":"ゴール","hero-tag":"スペシャリスト","hero-greet":"私は","hero-desc-full":"日常業務を管理し、スケーラブルなCRMシステムを構築し、グローバルブランド向けのコンテンツ戦略を実行します。","stat-perf":"性能","stat-roas":"ROAS達成","stat-msg":"メッセージROAS","stat-time":"節約","stat-range":"から","serv-title":"展示会","contact-h":"お問い合わせ","contact-p":"今すぐ始めましょう。","comp-1-h":"ソーシャル戦略","comp-2-h":"有料広告","comp-3-h":"CRMシステム","comp-4-h":"コンテンツ","form-btn":"提案を送信","sys-upd":"システム更新！","f-desc":"自動化によるブランドの強化。","f-q":"クイックリンク","link-home":"ホーム","link-port":"ポートフォリオ","link-cont":"お問い合わせ","link-soc":"ソーシャル","link-leg":"法務","link-off":"オフィス"},
-            cn: {"load-text":"加载中","nav-btn":"WhatsApp","goals":"进球","hero-tag":"专家","hero-greet":"我是","hero-desc-full":"我负责日常运营，构建可扩展的CRM系统，并为全球品牌执行明确的内容战略。","stat-perf":"表现","stat-roas":"ROAS","stat-msg":"信息ROAS","stat-time":"节省","stat-range":"到","serv-title":"专业展示","contact-h":"直接咨询","contact-p":"准备扩展品牌吗？","comp-1-h":"社交策略","comp-2-h":"付费广告","comp-3-h":"CRM系统","comp-4-h":"内容执行","form-btn":"提交建议","sys-upd":"系统已更新！","f-desc":"通过自动化赋予品牌力量。","f-q":"快速链接","link-home":"主页","link-port":"作品集","link-cont":"联系","link-soc":"社交","link-leg":"法律","link-off":"办公室"},
-            tr: {"load-text":"YÜKLENİYOR","nav-btn":"WhatsApp","goals":"Goller","hero-tag":"Uzman","hero-greet":"Ben","hero-desc-full":"Günlük operasyonları yönetiyor, ölçeklenebilir CRM sistemleri kuruyor dan küresel markalar için net içerik stratejileri yürütüyorum.","stat-perf":"Performans","stat-roas":"ROAS Başarısı","stat-msg":"Mesaj ROAS","stat-time":"Zaman Tasarrufu","stat-range":"ila","serv-title":"Uzmanlık展示","contact-h":"Doğrudan Sorgu","contact-p":"Bugün başlayalım.","comp-1-h":"Sosyal Strateji","comp-2-h":"Reklamlar","comp-3-h":"CRM Sistemi","comp-4-h":"İçerik","form-btn":"Teklif Gönder","sys-upd":"SİSTEM GÜNCELLENDİ!","f-desc":"Otomasyon yoluyla markaları güçlendirmek.","f-q":"Hızlı Linkler","link-home":"Ana Sayfa","link-port":"Portföy","link-cont":"İletişim","link-soc":"Sosyal","link-leg":"Yasal","link-off":"Ofis"}
+            en: {"load-text":"LOADING","nav-btn":"WhatsApp","goals":"Goals","hero-tag":"Trusted Specialist","hero-greet":"I'm","hero-desc-full":"I handle daily operations, build scalable CRM systems, and execute clear content strategies for global brands.","dl-cv":"Download CV","stat-perf":"Performance","stat-roas":"ROAS Achieved","stat-msg":"Message ROAS","stat-time":"Time Saved","stat-range":"to","serv-title":"Expertise Showcase","solver-title":"Problem Solver","contact-h":"Direct Inquiry","contact-p":"Ready to scale? Let's build today.","comp-1-h":"Social Strategy","comp-1-d":"High-impact social ecosystem.","comp-2-h":"Paid Ads","comp-2-d":"Targeting ROAS Meta/Google.","comp-3-h":"CRM System","comp-3-d":"Scalable lead management.","comp-4-h":"Content Execution","comp-4-d":"Ide creative into conversion.","form-btn":"Submit Proposal","sys-upd":"SYSTEM UPDATED!","f-desc":"Empowering brands through automated workflows, high-performance ads, and integrated content strategy management.","f-q":"Quick Links","link-home":"Home","link-port":"Portfolio","link-cont":"Contact","link-soc":"Social","link-leg":"Legal","link-off":"Office","footer-text":"© 2026 Abdul Majid Rendy Ramdani | All Rights Reserved.","ph-name":"Full Name","ph-msg":"Your Message"},
+            id: {"load-text":"LOADING","nav-btn":"WhatsApp","goals":"Gol","hero-tag":"Spesialis Terpercaya","hero-greet":"Saya","hero-desc-full":"Saya menangani operasional harian, membangun sistem CRM yang skalabel, dan mengeksekusi strategi konten untuk brand global.","dl-cv":"Unduh CV","stat-perf":"Performa","stat-roas":"ROAS Tercapai","stat-msg":"ROAS Pesan","stat-time":"Waktu Hemat","stat-range":"sampai","serv-title":"Galeri Keahlian","solver-title":"Problem Solver","contact-h":"Inquiry Langsung","contact-p":"Siap berkembang? Hubungi kami.","comp-1-h":"Strategi Sosial","comp-1-d":"Ekosistem sosial berdampak.","comp-2-h":"Iklan Berbayar","comp-2-d":"Target ROAS Meta/Google.","comp-3-h":"Sistem CRM","comp-3-d":"Manajemen lead skalabel.","comp-4-h":"Eksekusi Konten","comp-4-d":"Kreatif fokus konversi.","form-btn":"Kirim Proposal","sys-upd":"SISTEM DIPERBARUI!","f-desc":"Memberdayakan brand melalui alur kerja otomatis, iklan performa tinggi, dan manajemen strategi konten yang terintegrasi.","f-q":"Tautan Cepat","link-home":"Beranda","link-port":"Portofolio","link-cont":"Kontak","link-soc":"Sosial","link-leg":"Hukum","link-off":"Kantor","footer-text":"© 2026 Rendy Ramdani | Hak Cipta Dilindungi.","ph-name":"Nama Lengkap","ph-msg":"Pesan Anda"},
+            pk: {"load-text":"لوڈنگ","goals":"اہداف","hero-greet":"میں ہوں","solver-title":"مسئلہ حل کرنے والا"},
+            jp: {"load-text":"読み込み中","goals":"ゴール","hero-greet":"私は","solver-title":"問題解決者"},
+            cn: {"load-text":"加载中","goals":"进球","hero-greet":"我是","solver-title":"问题解决者"},
+            tr: {"load-text":"YÜKLENİYOR","goals":"Goller","hero-greet":"Ben","solver-title":"Problem Çözücü"}
         };
 
         function updateLang(l) { 
+            renderTour(l);
             const d = dictionary[l] || dictionary.en; 
-            document.querySelectorAll('[data-i18n]').forEach(el => { 
-                const k = el.getAttribute('data-i18n'); 
-                if(d[k]) el.textContent = d[k]; 
-            }); 
-            document.querySelectorAll('[data-i18n-ph]').forEach(el => { 
-                const k = el.getAttribute('data-i18n-ph'); 
-                if(d[k]) el.placeholder = d[k]; 
-            });
+            document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if(d[k]) el.textContent = d[k]; }); 
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => { const k = el.getAttribute('data-i18n-ph'); if(d[k]) el.placeholder = d[k]; });
         }
         document.getElementById('lang-select').addEventListener('change', (e) => updateLang(e.target.value));
+
+        // INITIALIZE
+        const imgPaths = ['ncP7pzyL/1', 'J42JMnf8/2', 'Vk5jyM5y/3', 'yYb9sdMk/4', 'xT4HnCWw/5', 'RZJtFmmN/6', 'FHkSRvvS/7', '7ZJz6442/8', 'W1qZ3VVq/9', '5tcCQrN1/10', 'fbx0cvJh/11', '43zh61mf/12', 'd08T29L9/13', '26rL2BZn/14', 'G2dTqsyQ/15', '9MCwJq7L/16', 'gjBwzSB4/17', 'GtSBL750/18', 'CMvns5LJ/19', 'GhH87RHM/20', '02bMWvzr/21', 'VLpS2ht6/22', 'g2hwpKys/23'];
+        imgPaths.forEach(img => { document.getElementById('portfolio-wrapper').innerHTML += `<div class="swiper-slide shine-card rounded-2xl"><img src="https://i.postimg.cc/${img}-20260428-195614-0000.png" class="rounded-2xl border border-white/10 shadow-xl"></div>`; });
+        new Swiper('.mySwiper', { loop: true, slidesPerView: 1, spaceBetween: 20, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination', clickable: true }, breakpoints: { 768: { slidesPerView: 3 } } });
+        renderTour('en');
 
         // TYPEWRITER
         let words=["Social Media Specialist.", "Virtual Assistant.", "Paid Ads Expert.", "CRM Strategist."], wI=0, cI=0, iD=false;
         function type(){ const cur=words[wI]; if(iD)cI--; else cI++; document.getElementById('typewriter').textContent=cur.substring(0, cI); let sp=iD?40:100; if(!iD && cI===cur.length){sp=2000; iD=true;} else if(iD && cI===0){iD=false; wI=(wI+1)%words.length; sp=500;} setTimeout(type, sp); }
         type();
         
-        // COUNTER RESET SAAT SCROLL
         const counterObserver = new IntersectionObserver((entries) => { 
-            entries.forEach(entry => { 
-                if(entry.isIntersecting){ 
-                    const el = entry.target, t = parseFloat(el.getAttribute('data-target')), px = el.getAttribute('data-prefix')||'', sx = el.getAttribute('data-suffix')||''; 
-                    let c = 0, step = t/40; 
-                    const timer = setInterval(() => { 
-                        c += step; 
-                        if(c >= t){ el.textContent = px + t + sx; clearInterval(timer); } 
-                        else { el.textContent = px + Math.floor(c) + sx; } 
-                    }, 30); 
-                } else {
-                    entry.target.textContent = "0"; 
-                }
-            });
+            entries.forEach(entry => { if(entry.isIntersecting){ const el = entry.target, t = parseFloat(el.getAttribute('data-target')), px = el.getAttribute('data-prefix')||'', sx = el.getAttribute('data-suffix')||''; let c = 0, step = t/40; const timer = setInterval(() => { c += step; if(c >= t){ el.textContent = px + t + sx; clearInterval(timer); } else { el.textContent = px + Math.floor(c) + sx; } }, 30); } });
         }, { threshold: 0.1 });
         document.querySelectorAll('.counter-val').forEach(c => counterObserver.observe(c));
-
-        // INITIALIZE PORTFOLIO SWIPER
-        const imgPaths = ['ncP7pzyL/1', 'J42JMnf8/2', 'Vk5jyM5y/3', 'yYb9sdMk/4', 'xT4HnCWw/5', 'RZJtFmmN/6', 'FHkSRvvS/7', '7ZJz6442/8', 'W1qZ3VVq/9', '5tcCQrN1/10', 'fbx0cvJh/11', '43zh61mf/12', 'd08T29L9/13', '26rL2BZn/14', 'G2dTqsyQ/15', '9MCwJq7L/16', 'gjBwzSB4/17', 'GtSBL750/18', 'CMvns5LJ/19', 'GhH87RHM/20', '02bMWvzr/21', 'VLpS2ht6/22', 'g2hwpKys/23'];
-        imgPaths.forEach(img => { document.getElementById('portfolio-wrapper').innerHTML += `<div class="swiper-slide shine-card rounded-2xl"><img src="https://i.postimg.cc/${img}-20260428-195614-0000.png" class="rounded-2xl border border-white/10 shadow-xl" onerror="this.src='https://i.postimg.cc/${img.split('/')[0]}/${img.split('/')[1]}-20260428-195615-0006.png'"></div>`; });
-        new Swiper('.mySwiper', { loop: true, slidesPerView: 1, spaceBetween: 20, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination', clickable: true }, breakpoints: { 768: { slidesPerView: 3 } } });
     </script>
 </body>
                     </html>
